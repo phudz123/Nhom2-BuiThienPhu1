@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SaveUrWife - Bảo vệ thông tin cá nhân</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+      margin: 0; padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 420px;
+      margin: 48px auto;
+      background: #fff;
+      padding: 36px 32px 32px 32px;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #b0c4de;
+      animation: fadeIn 0.7s;
+      position: relative;
+      overflow: hidden;
+    }
+    .container.slide-in {
+      animation: slideIn 0.6s;
+    }
+    .container.slide-out {
+      animation: slideOut 0.6s;
+    }
+    .container.bounce {
+      animation: bounceIn 0.7s;
+    }
+    @keyframes lockGlow {
+      from { filter: blur(0.5px) drop-shadow(0 0 8px #00c6ff44);}
+      to   { filter: blur(0.5px) drop-shadow(0 0 24px #007bff55);}
+    }
+    h2 {
+      text-align: center;
+      color: #007bff;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      animation: fadeInDown 0.7s;
+      z-index: 1;
+      position: relative;
+    }
+    .subtitle {
+      text-align: center;
+      color: #555;
+      font-size: 1.08rem;
+      margin-bottom: 18px;
+      font-style: italic;
+      animation: fadeInDown 0.9s;
+      z-index: 1;
+      position: relative;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 7px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+      z-index: 1;
+      position: relative;
+    }
+    input:focus {
+      border: 1.5px solid #007bff;
+      outline: none;
+      box-shadow: 0 2px 8px #b0c4de33;
+    }
+    button {
+      background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 1rem;
+      margin-top: 10px;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #b0c4de33;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      animation: fadeInUp 0.7s;
+      z-index: 1;
+      position: relative;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #0056b3 60%, #00aaff 100%);
+      transform: scale(1.05);
+      box-shadow: 0 4px 16px #b0c4de66;
+    }
+    .link {
+      color: #007bff;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      margin-top: 10px;
+      text-decoration: underline;
+      font-size: 1rem;
+      transition: color 0.2s;
+      animation: fadeIn 1s;
+      z-index: 1;
+      position: relative;
+    }
+    .link:hover { color: #0056b3; }
+    .result {
+      background: #e9ecef;
+      padding: 14px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 16px;
+      animation: fadeIn 0.5s;
+      box-shadow: 0 2px 8px #b0c4de33;
+      min-height: 40px;
+      z-index: 1;
+      position: relative;
+    }
+    .result i {
+      color: #007bff;
+      margin-right: 8px;
+    }
+    #logoutBtn {
+      width: auto;
+      margin: 10px auto 0 auto;
+      display: none;
+      background: linear-gradient(90deg, #fd7e14 60%, #ffb347 100%);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      padding: 8px 24px;
+      border-radius: 7px;
+      box-shadow: 0 2px 8px #b0c4de33;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      animation: fadeInUp 0.7s;
+      z-index: 1;
+      position: relative;
+    }
+    #logoutBtn:hover {
+      background: linear-gradient(90deg, #e17009 60%, #ffd580 100%);
+      transform: scale(1.07);
+    }
+    @media (max-width: 600px) {
+      .container { padding: 12px 2vw; }
+      h2 { font-size: 1.3rem; }
+      input, button { font-size: 0.95rem; }
+      .result { font-size: 13px; }
+      .watermark-lock { font-size: 60px; right: 2px; bottom: 10px;}
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100px);}
+      to { opacity: 1; transform: translateX(0);}
+    }
+    @keyframes slideOut {
+      from { opacity: 1; transform: translateX(0);}
+      to { opacity: 0; transform: translateX(-100px);}
+    }
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.7);}
+      60% { opacity: 1; transform: scale(1.05);}
+      80% { transform: scale(0.95);}
+      100% { transform: scale(1);}
+    }
+    .result:empty {
+        display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="registerBox">
+    <i class="fa-solid fa-lock watermark-lock"></i>
+    <h2><i class="fa-solid fa-user-plus"></i> Đăng ký tài khoản</h2>
+    <div class="subtitle">Tạo tài khoản mới để bảo vệ thông tin cá nhân của bạn và SaveUrWife</div>
+    <input type="text" id="name" placeholder="Họ tên" required>
+    <input type="text" id="cccd" placeholder="Số CCCD" required>
+    <input type="text" id="address" placeholder="Địa chỉ" required>
+    <input type="text" id="bank" placeholder="Số tài khoản" required>
+    <input type="password" id="password" placeholder="Mật khẩu" required>
+    <button onclick="register()"><i class="fa-solid fa-user-plus"></i> Đăng ký</button>
+    <span class="link" onclick="showLogin()"><i class="fa-solid fa-right-to-bracket"></i> Đã có tài khoản? Đăng nhập</span>
+    <span class="link" onclick="window.location='admin.html'"><i class="fa-solid fa-user-shield"></i> Quản trị</span>
+    <div id="registerMsg" class="result"></div>
+  </div>
+  <div class="container" id="loginBox" style="display:none">
+    <i class="fa-solid fa-lock watermark-lock"></i>
+    <h2><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập hệ thống</h2>
+    <div class="subtitle">Đăng nhập để xem và quản lý thông tin cá nhân của bạn</div>
+    <input type="text" id="loginName" placeholder="Họ tên" required>
+    <input type="password" id="loginPassword" placeholder="Mật khẩu" required>
+    <button id="loginBtn" onclick="login()"><i class="fa-solid fa-right-to-bracket"></i> Đăng nhập</button>
+    <span id="registerLink" class="link" onclick="showRegister()"><i class="fa-solid fa-user-plus"></i> Chưa có tài khoản? Đăng ký</span>
+    <div id="loginMsg" class="result"></div>
+    <div id="userInfo" class="result"></div>
+    <div id="editBox" style="display:none; margin-top:10px;">
+  <input type="text" id="editCCCD" placeholder="CCCD mới">
+  <input type="text" id="editAddress" placeholder="Địa chỉ mới">
+  <input type="text" id="editBank" placeholder="Số tài khoản mới">
+  <input type="password" id="editPassword" placeholder="Nhập lại mật khẩu">
+  <button onclick="updateInfo()"><i class="fa-solid fa-pen-to-square"></i> Cập nhật</button>
+  <button onclick="hideEditBox()"><i class="fa-solid fa-xmark"></i> Hủy</button>
+  <div id="editMsg" class="result"></div>
+</div>
+<button id="editBtn" style="display:none; margin-top:10px;" onclick="showEditBox()">
+  <i class="fa-solid fa-pen-to-square"></i> Sửa thông tin
+</button>
+<button id="deleteBtn" style="display:none; margin-top:10px; background:#dc3545;" onclick="deleteAccount()">
+  <i class="fa-solid fa-trash"></i> Xóa tài khoản
+</button>
+    <button id="logoutBtn" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</button>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    // Hiệu ứng chuyển động khi chuyển form
+    function animateSwitch(fromId, toId, animOut, animIn) {
+      const from = document.getElementById(fromId);
+      const to = document.getElementById(toId);
+      from.classList.remove('slide-in', 'slide-out', 'bounce');
+      to.classList.remove('slide-in', 'slide-out', 'bounce');
+      from.classList.add(animOut);
+      setTimeout(() => {
+        from.style.display = 'none';
+        from.classList.remove(animOut);
+        to.style.display = '';
+        to.classList.add(animIn);
+        setTimeout(() => to.classList.remove(animIn), 700);
+      }, 500);
+    }
+    // Ghi đè showLogin/showRegister để có hiệu ứng
+    window.showLogin = function() {
+      animateSwitch('registerBox', 'loginBox', 'slide-out', 'slide-in');
+    }
+    window.showRegister = function() {
+      animateSwitch('loginBox', 'registerBox', 'slide-out', 'bounce');
+    }
+  </script>
+</body>
+</html>

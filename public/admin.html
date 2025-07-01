@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quản trị người dùng</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+      margin: 0; padding: 0;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 36px 40px 36px 40px;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px #b0c4de;
+      animation: fadeIn 0.7s;
+    }
+    h2 {
+      text-align: center;
+      color: #007bff;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+      font-size: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px #b0c4de33;
+    }
+    th, td {
+      border: none;
+      padding: 13px 8px;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+      font-size: 1rem;
+    }
+    th {
+      background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    tr:nth-child(even) { background: #f1f7ff; }
+    tr:hover {
+      background: #e3f0ff;
+      transform: scale(1.01);
+      box-shadow: 0 2px 8px #b0c4de33;
+      transition: 0.2s;
+    }
+    button {
+      padding: 7px 18px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #b0c4de33;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #0056b3 60%, #00aaff 100%);
+      transform: scale(1.08);
+      box-shadow: 0 4px 16px #b0c4de66;
+    }
+    .result {
+      background: #e9ecef;
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 18px;
+      font-size: 17px;
+      animation: fadeIn 0.5s;
+      box-shadow: 0 2px 8px #b0c4de33;
+      border-left: 5px solid #007bff;
+      background: linear-gradient(90deg, #e9ecef 80%, #f0f8ff 100%);
+      min-height: 40px;
+    }
+    .result i {
+      color: #007bff;
+      margin-right: 8px;
+    }
+    .log {
+      font-size: 15px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      margin-top: 18px;
+      max-height: 240px;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px #b0c4de33;
+    }
+    h3 {
+      color: #007bff;
+      margin-top: 32px;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    @media (max-width: 900px) {
+      .container { padding: 16px 2vw; }
+      table, th, td { font-size: 13px; }
+      .result { font-size: 14px; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    td:last-child {
+      text-align: center;
+      vertical-align: middle;
+    }
+    td:last-child button {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .log-row {
+      animation: fadeIn 0.5s;
+    }
+    #detailBox {
+      border-left: 5px solid #007bff;
+      background: linear-gradient(90deg, #e9ecef 80%, #f0f8ff 100%);
+    }
+    #logTable tr.log-row:hover {
+      background: #d0eaff;
+      color: #007bff;
+      transition: 0.2s;
+    }
+    .icon-user { color: #007bff; }
+    .icon-log { color: #00b894; }
+    .icon-eye { color: #fd7e14; }
+    .icon-back { color: #6c757d; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><i class="fa-solid fa-users-gear icon-user"></i> Quản trị người dùng</h2>
+    <table>
+      <thead>
+        <tr>
+          <th><i class="fa-solid fa-user"></i> Họ tên</th>
+          <th><i class="fa-solid fa-id-card"></i> CCCD</th>
+          <th><i class="fa-solid fa-location-dot"></i> Địa chỉ</th>
+          <th><i class="fa-solid fa-building-columns"></i> STK</th>
+          <th><i class="fa-solid fa-eye"></i> Xem chi tiết</th>
+        </tr>
+      </thead>
+      <tbody id="userTable"></tbody>
+    </table>
+    <div id="detailBox" class="result"></div>
+    <h3><i class="fa-solid fa-clipboard-list icon-log"></i> Log truy cập</h3>
+    <table id="logTable" class="log">
+      <thead>
+        <tr>
+          <th><i class="fa-solid fa-clock"></i> Thời gian</th>
+          <th><i class="fa-solid fa-user"></i> Người thao tác</th>
+          <th><i class="fa-solid fa-bolt"></i> Hành động</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="window.location='index.html'" style="margin-top:18px;">
+      <i class="fa-solid fa-arrow-left icon-back"></i> Quay lại
+    </button>
+  </div>
+  <script>
+    async function loadUsers() {
+      const res = await fetch('/api/users');
+      const users = await res.json();
+      const tb = document.getElementById('userTable');
+      tb.innerHTML = '';
+      users.forEach(u => {
+        tb.innerHTML += `<tr>
+          <td>${u.name}</td>
+          <td>${u.cccd}</td>
+          <td>${u.address}</td>
+          <td>${u.bank}</td>
+          <td><button onclick="showDetail('${u.name}')"><i class="fa-solid fa-eye icon-eye"></i> Xem</button></td>
+        </tr>`;
+      });
+    }
+    async function showDetail(name) {
+      const adminPass = prompt('Nhập mật khẩu admin:');
+      if (!adminPass) return;
+      const res = await fetch('/api/admin-detail', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, adminPass })
+      });
+      const box = document.getElementById('detailBox');
+      if (res.ok) {
+        const u = await res.json();
+        box.innerHTML = `<i class="fa-solid fa-user-shield"></i> <b>Họ tên:</b> ${u.name}<br>
+          <i class="fa-solid fa-id-card"></i> <b>CCCD:</b> ${u.cccd}<br>
+          <i class="fa-solid fa-location-dot"></i> <b>Địa chỉ:</b> ${u.address}<br>
+          <i class="fa-solid fa-building-columns"></i> <b>Số tài khoản:</b> ${u.bank}`;
+        loadLogs();
+        box.style.animation = "fadeIn 0.5s";
+      } else {
+        const err = await res.json();
+        box.innerHTML = `<span style="color:red"><i class="fa-solid fa-triangle-exclamation"></i> ${err.error}</span>`;
+      }
+    }
+    async function loadLogs() {
+      const res = await fetch('/api/logs');
+      const logs = (await res.text()).trim().split('\n');
+      const tb = document.querySelector('#logTable tbody');
+      tb.innerHTML = '';
+      logs.forEach(line => {
+        // [2025-06-29T09:23:13.928Z] Phạm Ngọc Sơn: Đăng ký
+        const match = line.match(/^\[(.*?)\] (.*?): (.*)$/);
+        if (match) {
+          const [_, time, user, action] = match;
+          tb.innerHTML += `<tr class="log-row">
+            <td><i class="fa-solid fa-clock"></i> ${new Date(time).toLocaleString()}</td>
+            <td><i class="fa-solid fa-user"></i> ${user}</td>
+            <td><i class="fa-solid fa-bolt"></i> ${action}</td>
+          </tr>`;
+        }
+      });
+    }
+    loadUsers(); loadLogs();
+  </script>
+</body>
+</html>
